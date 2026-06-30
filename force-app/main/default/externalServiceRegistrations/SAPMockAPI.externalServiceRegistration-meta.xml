@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExternalServiceRegistration xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>SAPMockAPI</label>
+    <namedCredentialReference>SAP_Mock_API</namedCredentialReference>
+    <operations>
+        <active>true</active>
+        <name>getorderstatus</name>
+    </operations>
+    <operations>
+        <active>true</active>
+        <name>getinventorybysku</name>
+    </operations>
+    <operations>
+        <active>true</active>
+        <name>createsaporder</name>
+    </operations>
+    <registrationProviderType>Custom</registrationProviderType>
+    <schema>{
+  &quot;openapi&quot;: &quot;3.0.0&quot;,
+  &quot;info&quot;: {
+    &quot;title&quot;: &quot;SAP Mock API&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;
+  },
+  &quot;servers&quot;: [{
+    &quot;url&quot;: &quot;https://sap-api-agent.free.beeceptor.com&quot;
+  }],
+  &quot;paths&quot;: {
+    &quot;/inventory/{sku}&quot;: {
+      &quot;get&quot;: {
+        &quot;operationId&quot;: &quot;getInventoryBySku&quot;,
+        &quot;parameters&quot;: [{
+          &quot;name&quot;: &quot;sku&quot;,
+          &quot;in&quot;: &quot;path&quot;,
+          &quot;required&quot;: true,
+          &quot;schema&quot;: {
+            &quot;type&quot;: &quot;string&quot;
+          }
+        }],
+        &quot;responses&quot;: {
+          &quot;200&quot;: {
+            &quot;description&quot;: &quot;OK&quot;,
+            &quot;content&quot;: {
+              &quot;application/json&quot;: {
+                &quot;schema&quot;: {
+                  &quot;type&quot;: &quot;object&quot;,
+                  &quot;properties&quot;: {
+                    &quot;sku&quot;: {
+                      &quot;type&quot;: &quot;string&quot;
+                    },
+                    &quot;productName&quot;: {
+                      &quot;type&quot;: &quot;string&quot;
+                    },
+                    &quot;availableQty&quot;: {
+                      &quot;type&quot;: &quot;integer&quot;
+                    },
+                    &quot;warehouse&quot;: {
+                      &quot;type&quot;: &quot;string&quot;
+                    },
+                    &quot;leadTimeDays&quot;: {
+                      &quot;type&quot;: &quot;integer&quot;
+                    },
+                    &quot;status&quot;: {
+                      &quot;type&quot;: &quot;string&quot;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    &quot;/orders/{orderNumber}&quot;: {
+      &quot;get&quot;: {
+        &quot;operationId&quot;: &quot;getOrderStatus&quot;,
+        &quot;parameters&quot;: [{
+          &quot;name&quot;: &quot;orderNumber&quot;,
+          &quot;in&quot;: &quot;path&quot;,
+          &quot;required&quot;: true,
+          &quot;schema&quot;: {
+            &quot;type&quot;: &quot;string&quot;
+          }
+        }],
+        &quot;responses&quot;: {
+          &quot;200&quot;: {
+            &quot;description&quot;: &quot;OK&quot;,
+            &quot;content&quot;: {
+              &quot;application/json&quot;: {
+                &quot;schema&quot;: {
+                  &quot;type&quot;: &quot;object&quot;,
+                  &quot;properties&quot;: {
+                    &quot;orderNumber&quot;: {
+                      &quot;type&quot;: &quot;string&quot;
+                    },
+                    &quot;customerName&quot;: {
+                      &quot;type&quot;: &quot;string&quot;
+                    },
+                    &quot;status&quot;: {
+                      &quot;type&quot;: &quot;string&quot;
+                    },
+                    &quot;expectedDelivery&quot;: {
+                      &quot;type&quot;: &quot;string&quot;
+                    },
+                    &quot;quantity&quot;: {
+                      &quot;type&quot;: &quot;integer&quot;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    &quot;/orders/create&quot;: {
+      &quot;post&quot;: {
+        &quot;operationId&quot;: &quot;createSAPOrder&quot;,
+        &quot;requestBody&quot;: {
+          &quot;required&quot;: true,
+          &quot;content&quot;: {
+            &quot;application/json&quot;: {
+              &quot;schema&quot;: {
+                &quot;type&quot;: &quot;object&quot;,
+                &quot;properties&quot;: {
+                  &quot;customerName&quot;: {
+                    &quot;type&quot;: &quot;string&quot;
+                  },
+                  &quot;sku&quot;: {
+                    &quot;type&quot;: &quot;string&quot;
+                  },
+                  &quot;quantity&quot;: {
+                    &quot;type&quot;: &quot;integer&quot;
+                  }
+                }
+              }
+            }
+          }
+        },
+        &quot;responses&quot;: {
+          &quot;200&quot;: {
+            &quot;description&quot;: &quot;OK&quot;,
+            &quot;content&quot;: {
+              &quot;application/json&quot;: {
+                &quot;schema&quot;: {
+                  &quot;type&quot;: &quot;object&quot;,
+                  &quot;properties&quot;: {
+                    &quot;success&quot;: {
+                      &quot;type&quot;: &quot;boolean&quot;
+                    },
+                    &quot;newOrderNumber&quot;: {
+                      &quot;type&quot;: &quot;string&quot;
+                    },
+                    &quot;status&quot;: {
+                      &quot;type&quot;: &quot;string&quot;
+                    },
+                    &quot;estimatedShipDate&quot;: {
+                      &quot;type&quot;: &quot;string&quot;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}</schema>
+    <schemaType>OpenApi3</schemaType>
+    <serviceBinding>{&quot;host&quot;:&quot;sap-api-agent.free.beeceptor.com&quot;,&quot;basePath&quot;:&quot;&quot;,&quot;allowedSchemes&quot;:[&quot;HTTPS&quot;],&quot;requestMediaTypes&quot;:[],&quot;responseMediaTypes&quot;:[],&quot;compatibleMediaTypes&quot;:{},&quot;integrationFlags&quot;:null,&quot;extensions&quot;:{}}</serviceBinding>
+    <status>Complete</status>
+    <systemVersion>8</systemVersion>
+</ExternalServiceRegistration>
